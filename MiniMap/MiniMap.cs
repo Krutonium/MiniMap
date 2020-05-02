@@ -25,9 +25,6 @@ namespace MiniMap
             GameObject Prefab = AB.LoadAsset<GameObject>("MINIMAPOBJECTS.prefab");
             MiniMAP = GameObject.Instantiate<GameObject>(Prefab);
             GameObject.Destroy(Prefab);
-
-            GameObject.Find("SATSUMA(557kg, 248)").transform.Find("DriverHeadPivot/CameraPivot/PivotSeatR").localEulerAngles = new Vector3(0f, 180f, 0f);
-
             PLAYER = GameObject.Find("PLAYER").transform;
             MiniMAPCamera = MiniMAP.transform.Find("MAPCAMERA");
             GUI = GameObject.Find("GUI").transform;
@@ -46,6 +43,8 @@ namespace MiniMap
                 {
                     Zoom = PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.x + PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.z / 2f +- 40f;
                 }
+
+                PLAYER.parent.parent.localEulerAngles = new Vector3(PLAYER.parent.parent.localEulerAngles.x , 180f, PLAYER.parent.parent.localEulerAngles.z);
                 
                 MiniMAPCamera.GetComponent<Camera>().orthographicSize = Zoom;
                 MiniMAPArrow.SetActive(false);
