@@ -39,9 +39,12 @@ namespace MiniMap
         {
             if (PLAYER.parent != null)
             {
-                if (PLAYER.parent.parent.parent.GetComponent<Rigidbody>() != null)
+                if(shouldZoomBool == true)
                 {
-                    Zoom = PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.x + PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.z / 2f +- 40f;
+                    if (PLAYER.parent.parent.parent.GetComponent<Rigidbody>() != null)
+                    {
+                        Zoom = PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.x + PLAYER.parent.parent.parent.GetComponent<Rigidbody>().velocity.z / 2f + -40f;
+                    }
                 }
 
                 PLAYER.parent.parent.localEulerAngles = new Vector3(PLAYER.parent.parent.localEulerAngles.x , 180f, PLAYER.parent.parent.localEulerAngles.z);
@@ -58,6 +61,22 @@ namespace MiniMap
                 MiniMAPCamera.eulerAngles = new Vector3(90f, PLAYER.eulerAngles.y, 0f);
                 MiniMAPCamera.position = new Vector3(PLAYER.position.x, 15f, PLAYER.position.z);
             }          
+        }
+        
+
+
+        static void changeBool()
+        {
+            shouldZoomBool = !shouldZoomBool;
+        }
+        static bool shouldZoomBool = true;
+        static Settings shouldZoom = new Settings("zoom", "Zoom", true, changeBool);
+        public override void ModSettings()
+        {
+            // All settings should be created here. 
+            // DO NOT put anything else here that settings.
+            Settings.AddCheckBox(this, shouldZoom);
+           
         }
     }
 }
